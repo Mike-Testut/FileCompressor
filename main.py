@@ -13,11 +13,12 @@ label3 = gui.Text("Name compressed file")
 input_box3 = gui.Input(key="new_name")
 
 compress_button = gui.Button("Compress")
+success_label = gui.Text(key="success_label")
 
 window = gui.Window(title="Compress Files", layout=[[label1,input_box1,choose_button1],
                                                     [label2,input_box2,choose_button2],
                                                     [label3,input_box3],
-                                                    [compress_button]])
+                                                    [compress_button, success_label]])
 while True:
     event, values = window.read()
     print(event, values)
@@ -29,6 +30,7 @@ while True:
     match event:
         case "Compress":
             zip_creator.make_archive(filepaths, folder, new_name)
+            window["success_label"].update(f"Successfully compressed {folder}/{new_name}.zip")
         case gui.WIN_CLOSED:
             break
 window.close()
